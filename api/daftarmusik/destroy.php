@@ -1,19 +1,20 @@
 <?php
 
 header('Content-Type: application/json');
+include("helper.php");
 
 if($_SERVER["REQUEST_METHOD"] == 'DELETE') {
-    include("../connect.php");
+    include("../../connect.php");
 
     if(isset($_GET['id'])){
         if($_GET['id'] != ""){
             $id = $_GET['id'];
 
             $search_id = $connect->query("SELECT * FROM daftarmusik WHERE id='$id'");
-            $user = $search_id->fetch_assoc();
+            $daftarmusik = $search_id->fetch_assoc();
 
-            if($user != NULL){
-                $delete = $connect->query("DELETE FROM daftarmusik id='$id'");
+            if($daftarmusik != NULL){
+                $delete = $connect->query("DELETE FROM daftarmusik WHERE id='$id'");
 
                 $array_api = response_json(200, 'berhasil menghapus daftar');
             }
@@ -22,7 +23,7 @@ if($_SERVER["REQUEST_METHOD"] == 'DELETE') {
             }
         }
         else{
-            $array_api = response_json(400, 'gagal menghapus data user, ID belum dimasukkan');
+            $array_api = response_json(400, 'gagal menghapus data daftar musik, ID belum dimasukkan');
         }
     }
     else{

@@ -1,7 +1,7 @@
 <?php
   
   header('Content-Type: application/json');
-  include("../connect.php");
+  include("../../connect.php");
   include("helper.php");
 
 if($_SERVER['REQUEST_METHOD'] == 'GET') {
