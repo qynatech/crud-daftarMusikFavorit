@@ -1,10 +1,22 @@
 <?php
 
 header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, DELETE, OPTIONS"); 
+header("Access-Control-Allow-Headers *");        
+
+
 include("helper.php");
 
+if($_SERVER["REQUEST_METHOD"] == 'OPTIONS'){
+    http_response_code(200);
+    exit();
+}
+ $array_api = response_json(400, 'Request tidak valid');
 if($_SERVER["REQUEST_METHOD"] == 'DELETE') {
     include("../../connect.php");
+
+    $data = json_decode(file_get_contents("php://input"), true);
 
     if(isset($_GET['id'])){
         if($_GET['id'] != ""){

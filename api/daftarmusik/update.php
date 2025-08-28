@@ -1,11 +1,21 @@
 <?php
-
+header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Methods: PUT, OPTIONS");
 header('Content-Type: application/json');
+header("Access-Control-Allow-Origin: *");
 
 include('helper.php');
 
+if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+    http_response_code(200);
+    exit();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
+    $daftarmusik = json_decode(file_get_contents("php://input"), true);
     include("../../connect.php");
+
+    $form_daftarmusik = json_decode(file_get_contents("php://input"));
 
     if (isset($_GET['id'])) {
 
@@ -24,10 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'PUT') {
                     $judulLagu = $form_daftarmusik->judulLagu;
 
                     $update = $connect->query("UPDATE daftarmusik SET username = '$username', penyanyi = '$penyanyi', judulLagu = '$judulLagu' WHERE id = '$id'");
-
+ 
                     $array_api = response_json(200, 'berhasil mengupdate daftar musik');
-                }
-                else {
+                } else {
                     $array_api = response_json(400, 'gagal mengupdate daftar musik, formulir tidak lengkap.');
                 }
             } else {
